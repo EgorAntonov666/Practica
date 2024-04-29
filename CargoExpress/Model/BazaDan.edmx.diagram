@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="36d4689a20a5440da92fc7ff2f67c035" Name="Diagram1" ZoomLevel="81">
+        <EntityTypeShape EntityType="CargoExpressModel.Aircraft" Width="1.5" PointX="1.5" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.Airport" Width="1.5" PointX="1.5" PointY="22.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.Cargo" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.CargoStatus" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.Customer" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.Employee" Width="1.5" PointX="3" PointY="35.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.Flight" Width="1.5" PointX="1.5" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.Order" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.Payment" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.PaymentMethod" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.RoleEmployee" Width="1.5" PointX="0.75" PointY="36" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.Route" Width="1.5" PointX="0.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.StatusAircraft" Width="1.5" PointX="1.5" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.StatusAirport" Width="1.5" PointX="1.5" PointY="25.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.StatusFlight" Width="1.5" PointX="1.5" PointY="32.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CargoExpressModel.StatusOrder" Width="1.5" PointX="3" PointY="12.875" IsExpanded="true" />
+        <AssociationConnector Association="CargoExpressModel.fk_aircraft_status_aircraft" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_flight_aircraft" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_order_aircraft" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_route_aircraft" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_airport_status_airport" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_order_airport" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_route_arrival_airport" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_route_departure_airport" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_cargo_cargo_status" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_cargo_customer" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_cargo_route" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_order_cargo" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_order_customer" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_employee_role_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_order_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_flight_status_flight" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_order_flight" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_route_flight" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_order_payment" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_order_route" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_order_status_order" ManuallyRouted="false" />
+        <AssociationConnector Association="CargoExpressModel.fk_payment_payment_method" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

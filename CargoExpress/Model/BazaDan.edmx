@@ -1,0 +1,1290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище CargoExpressModel" Provider="Npgsql" ProviderManifestToken="16.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Aircraft">
+          <Key>
+            <PropertyRef Name="IDAircraft" />
+          </Key>
+          <Property Name="IDAircraft" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDStatusAircraft" Type="int4" Nullable="false" />
+          <Property Name="Model" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Capacity" Type="int4" />
+        </EntityType>
+        <EntityType Name="Airport">
+          <Key>
+            <PropertyRef Name="IDAirport" />
+          </Key>
+          <Property Name="IDAirport" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDStatusAirport" Type="int4" Nullable="false" />
+          <Property Name="AirportName" Type="varchar" MaxLength="30" />
+          <Property Name="Location" Type="varchar" MaxLength="35" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="IDCargo" />
+          </Key>
+          <Property Name="IDCargo" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDRoute" Type="int4" Nullable="false" />
+          <Property Name="IDCargoStatus" Type="int4" Nullable="false" />
+          <Property Name="IDCustomer" Type="int4" Nullable="false" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Weight" Type="numeric" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Volume" Type="numeric" Precision="19" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CargoStatus">
+          <Key>
+            <PropertyRef Name="IDCargoStatus" />
+          </Key>
+          <Property Name="IDCargoStatus" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CargoStatus" Type="varchar" MaxLength="17" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="IDCustomer" />
+          </Key>
+          <Property Name="IDCustomer" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="43" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6005: Тип данных "money" в настоящее время не поддерживается для целевой версии платформы Entity Framework; столбец "Salary" в таблице "CargoExpress.public.Employee" был исключен.-->
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="IDEmployee" />
+          </Key>
+          <Property Name="IDEmployee" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDRoleEmployee" Type="int4" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="43" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="255" />
+          <Property Name="Login" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="65" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="IDFlight" />
+          </Key>
+          <Property Name="IDFlight" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDAircraft" Type="int4" Nullable="false" />
+          <Property Name="IDStatusFlight" Type="int4" Nullable="false" />
+          <Property Name="DepartureTime" Type="timestamp" Nullable="false" />
+          <Property Name="ArrivalTime" Type="timestamp" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="IDOrder" />
+          </Key>
+          <Property Name="IDOrder" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDCustomer" Type="int4" Nullable="false" />
+          <Property Name="IDFlight" Type="int4" Nullable="false" />
+          <Property Name="IDAircraft" Type="int4" Nullable="false" />
+          <Property Name="IDAirport" Type="int4" Nullable="false" />
+          <Property Name="IDRoute" Type="int4" Nullable="false" />
+          <Property Name="IDCargo" Type="int4" Nullable="false" />
+          <Property Name="IDPayment" Type="int4" Nullable="false" />
+          <Property Name="IDEmployee" Type="int4" Nullable="false" />
+          <Property Name="IDStatusOrder" Type="int4" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6005: Тип данных "money" в настоящее время не поддерживается для целевой версии платформы Entity Framework; столбец "Amount" в таблице "CargoExpress.public.Payment" был исключен.-->
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="IDPayment" />
+          </Key>
+          <Property Name="IDPayment" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDPaymentMethod" Type="int4" Nullable="false" />
+          <Property Name="PaymentDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="IDPaymentMethod" />
+          </Key>
+          <Property Name="IDPaymentMethod" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentMethod" Type="varchar" MaxLength="18" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RoleEmployee">
+          <Key>
+            <PropertyRef Name="IDRoleEmployee" />
+          </Key>
+          <Property Name="IDRoleEmployee" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleEmployee" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="IDRoute" />
+          </Key>
+          <Property Name="IDRoute" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDFlight" Type="int4" Nullable="false" />
+          <Property Name="IDAircraft" Type="int4" Nullable="false" />
+          <Property Name="IDArrivalAirport" Type="int4" Nullable="false" />
+          <Property Name="IDDepartureAirport" Type="int4" Nullable="false" />
+          <Property Name="Distance" Type="float8" />
+        </EntityType>
+        <EntityType Name="StatusAircraft">
+          <Key>
+            <PropertyRef Name="IDStatusAircraft" />
+          </Key>
+          <Property Name="IDStatusAircraft" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusAircraft" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatusAirport">
+          <Key>
+            <PropertyRef Name="IDStatusAirport" />
+          </Key>
+          <Property Name="IDStatusAirport" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusAirport" Type="varchar" MaxLength="11" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatusFlight">
+          <Key>
+            <PropertyRef Name="IDStatusFlight" />
+          </Key>
+          <Property Name="IDStatusFlight" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusFlight" Type="varchar" MaxLength="17" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatusOrder">
+          <Key>
+            <PropertyRef Name="IDStatusOrder" />
+          </Key>
+          <Property Name="IDStatusOrder" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusOrder" Type="varchar" MaxLength="17" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_aircraft_status_aircraft">
+          <End Role="StatusAircraft" Type="Self.StatusAircraft" Multiplicity="1" />
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusAircraft">
+              <PropertyRef Name="IDStatusAircraft" />
+            </Principal>
+            <Dependent Role="Aircraft">
+              <PropertyRef Name="IDStatusAircraft" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_airport_status_airport">
+          <End Role="StatusAirport" Type="Self.StatusAirport" Multiplicity="1" />
+          <End Role="Airport" Type="Self.Airport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusAirport">
+              <PropertyRef Name="IDStatusAirport" />
+            </Principal>
+            <Dependent Role="Airport">
+              <PropertyRef Name="IDStatusAirport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cargo_cargo_status">
+          <End Role="CargoStatus" Type="Self.CargoStatus" Multiplicity="1" />
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CargoStatus">
+              <PropertyRef Name="IDCargoStatus" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="IDCargoStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cargo_customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="IDCustomer" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="IDCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cargo_route">
+          <End Role="Route" Type="Self.Route" Multiplicity="1" />
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="IDRoute" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="IDRoute" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_employee_role_employee">
+          <End Role="RoleEmployee" Type="Self.RoleEmployee" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleEmployee">
+              <PropertyRef Name="IDRoleEmployee" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="IDRoleEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_flight_aircraft">
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aircraft">
+              <PropertyRef Name="IDAircraft" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="IDAircraft" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_flight_status_flight">
+          <End Role="StatusFlight" Type="Self.StatusFlight" Multiplicity="1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusFlight">
+              <PropertyRef Name="IDStatusFlight" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="IDStatusFlight" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_aircraft">
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aircraft">
+              <PropertyRef Name="IDAircraft" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDAircraft" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_airport">
+          <End Role="Airport" Type="Self.Airport" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="IDAirport" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDAirport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_cargo">
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargo">
+              <PropertyRef Name="IDCargo" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDCargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="IDCustomer" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="IDEmployee" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_flight">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="IDFlight" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDFlight" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_payment">
+          <End Role="Payment" Type="Self.Payment" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="IDPayment" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDPayment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_route">
+          <End Role="Route" Type="Self.Route" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="IDRoute" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDRoute" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_status_order">
+          <End Role="StatusOrder" Type="Self.StatusOrder" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusOrder">
+              <PropertyRef Name="IDStatusOrder" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDStatusOrder" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_payment_payment_method">
+          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentMethod">
+              <PropertyRef Name="IDPaymentMethod" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="IDPaymentMethod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_route_aircraft">
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aircraft">
+              <PropertyRef Name="IDAircraft" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="IDAircraft" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_route_arrival_airport">
+          <End Role="Airport" Type="Self.Airport" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="IDAirport" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="IDArrivalAirport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_route_departure_airport">
+          <End Role="Airport" Type="Self.Airport" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="IDAirport" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="IDDepartureAirport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_route_flight">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="IDFlight" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="IDFlight" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище CargoExpressModelContainer">
+          <EntitySet Name="Aircraft" EntityType="Self.Aircraft" Schema="public" store:Type="Tables" />
+          <EntitySet Name="Airport" EntityType="Self.Airport" Schema="public" store:Type="Tables" />
+          <EntitySet Name="Cargo" EntityType="Self.Cargo" Schema="public" store:Type="Tables" />
+          <EntitySet Name="CargoStatus" EntityType="Self.CargoStatus" Schema="public" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="public" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="public" store:Type="Tables" />
+          <EntitySet Name="Flight" EntityType="Self.Flight" Schema="public" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="public" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="public" store:Type="Tables" />
+          <EntitySet Name="PaymentMethod" EntityType="Self.PaymentMethod" Schema="public" store:Type="Tables" />
+          <EntitySet Name="RoleEmployee" EntityType="Self.RoleEmployee" Schema="public" store:Type="Tables" />
+          <EntitySet Name="Route" EntityType="Self.Route" Schema="public" store:Type="Tables" />
+          <EntitySet Name="StatusAircraft" EntityType="Self.StatusAircraft" Schema="public" store:Type="Tables" />
+          <EntitySet Name="StatusAirport" EntityType="Self.StatusAirport" Schema="public" store:Type="Tables" />
+          <EntitySet Name="StatusFlight" EntityType="Self.StatusFlight" Schema="public" store:Type="Tables" />
+          <EntitySet Name="StatusOrder" EntityType="Self.StatusOrder" Schema="public" store:Type="Tables" />
+          <AssociationSet Name="fk_aircraft_status_aircraft" Association="Self.fk_aircraft_status_aircraft">
+            <End Role="StatusAircraft" EntitySet="StatusAircraft" />
+            <End Role="Aircraft" EntitySet="Aircraft" />
+          </AssociationSet>
+          <AssociationSet Name="fk_airport_status_airport" Association="Self.fk_airport_status_airport">
+            <End Role="StatusAirport" EntitySet="StatusAirport" />
+            <End Role="Airport" EntitySet="Airport" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cargo_cargo_status" Association="Self.fk_cargo_cargo_status">
+            <End Role="CargoStatus" EntitySet="CargoStatus" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cargo_customer" Association="Self.fk_cargo_customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cargo_route" Association="Self.fk_cargo_route">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_employee_role_employee" Association="Self.fk_employee_role_employee">
+            <End Role="RoleEmployee" EntitySet="RoleEmployee" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="fk_flight_aircraft" Association="Self.fk_flight_aircraft">
+            <End Role="Aircraft" EntitySet="Aircraft" />
+            <End Role="Flight" EntitySet="Flight" />
+          </AssociationSet>
+          <AssociationSet Name="fk_flight_status_flight" Association="Self.fk_flight_status_flight">
+            <End Role="StatusFlight" EntitySet="StatusFlight" />
+            <End Role="Flight" EntitySet="Flight" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_aircraft" Association="Self.fk_order_aircraft">
+            <End Role="Aircraft" EntitySet="Aircraft" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_airport" Association="Self.fk_order_airport">
+            <End Role="Airport" EntitySet="Airport" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_cargo" Association="Self.fk_order_cargo">
+            <End Role="Cargo" EntitySet="Cargo" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_customer" Association="Self.fk_order_customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_employee" Association="Self.fk_order_employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_flight" Association="Self.fk_order_flight">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_payment" Association="Self.fk_order_payment">
+            <End Role="Payment" EntitySet="Payment" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_route" Association="Self.fk_order_route">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_status_order" Association="Self.fk_order_status_order">
+            <End Role="StatusOrder" EntitySet="StatusOrder" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_payment_payment_method" Association="Self.fk_payment_payment_method">
+            <End Role="PaymentMethod" EntitySet="PaymentMethod" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_route_aircraft" Association="Self.fk_route_aircraft">
+            <End Role="Aircraft" EntitySet="Aircraft" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="fk_route_arrival_airport" Association="Self.fk_route_arrival_airport">
+            <End Role="Airport" EntitySet="Airport" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="fk_route_departure_airport" Association="Self.fk_route_departure_airport">
+            <End Role="Airport" EntitySet="Airport" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="fk_route_flight" Association="Self.fk_route_flight">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CargoExpressModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Aircraft">
+          <Key>
+            <PropertyRef Name="IDAircraft" />
+          </Key>
+          <Property Name="IDAircraft" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDStatusAircraft" Type="Int32" Nullable="false" />
+          <Property Name="Model" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Capacity" Type="Int32" />
+          <NavigationProperty Name="StatusAircraft" Relationship="Self.fk_aircraft_status_aircraft" FromRole="Aircraft" ToRole="StatusAircraft" />
+          <NavigationProperty Name="Flight" Relationship="Self.fk_flight_aircraft" FromRole="Aircraft" ToRole="Flight" />
+          <NavigationProperty Name="Order" Relationship="Self.fk_order_aircraft" FromRole="Aircraft" ToRole="Order" />
+          <NavigationProperty Name="Route" Relationship="Self.fk_route_aircraft" FromRole="Aircraft" ToRole="Route" />
+        </EntityType>
+        <EntityType Name="Airport">
+          <Key>
+            <PropertyRef Name="IDAirport" />
+          </Key>
+          <Property Name="IDAirport" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDStatusAirport" Type="Int32" Nullable="false" />
+          <Property Name="AirportName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="StatusAirport" Relationship="Self.fk_airport_status_airport" FromRole="Airport" ToRole="StatusAirport" />
+          <NavigationProperty Name="Order" Relationship="Self.fk_order_airport" FromRole="Airport" ToRole="Order" />
+          <NavigationProperty Name="Route" Relationship="Self.fk_route_arrival_airport" FromRole="Airport" ToRole="Route" />
+          <NavigationProperty Name="Route1" Relationship="Self.fk_route_departure_airport" FromRole="Airport" ToRole="Route" />
+        </EntityType>
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="IDCargo" />
+          </Key>
+          <Property Name="IDCargo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDRoute" Type="Int32" Nullable="false" />
+          <Property Name="IDCargoStatus" Type="Int32" Nullable="false" />
+          <Property Name="IDCustomer" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Weight" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Volume" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="CargoStatus" Relationship="Self.fk_cargo_cargo_status" FromRole="Cargo" ToRole="CargoStatus" />
+          <NavigationProperty Name="Customer" Relationship="Self.fk_cargo_customer" FromRole="Cargo" ToRole="Customer" />
+          <NavigationProperty Name="Route" Relationship="Self.fk_cargo_route" FromRole="Cargo" ToRole="Route" />
+          <NavigationProperty Name="Order" Relationship="Self.fk_order_cargo" FromRole="Cargo" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="CargoStatus">
+          <Key>
+            <PropertyRef Name="IDCargoStatus" />
+          </Key>
+          <Property Name="IDCargoStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CargoStatus1" Type="String" MaxLength="17" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cargo" Relationship="Self.fk_cargo_cargo_status" FromRole="CargoStatus" ToRole="Cargo" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="IDCustomer" />
+          </Key>
+          <Property Name="IDCustomer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="43" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cargo" Relationship="Self.fk_cargo_customer" FromRole="Customer" ToRole="Cargo" />
+          <NavigationProperty Name="Order" Relationship="Self.fk_order_customer" FromRole="Customer" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="IDEmployee" />
+          </Key>
+          <Property Name="IDEmployee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDRoleEmployee" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="43" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="65" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RoleEmployee" Relationship="Self.fk_employee_role_employee" FromRole="Employee" ToRole="RoleEmployee" />
+          <NavigationProperty Name="Order" Relationship="Self.fk_order_employee" FromRole="Employee" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="IDFlight" />
+          </Key>
+          <Property Name="IDFlight" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDAircraft" Type="Int32" Nullable="false" />
+          <Property Name="IDStatusFlight" Type="Int32" Nullable="false" />
+          <Property Name="DepartureTime" Type="DateTime" Precision="6" Nullable="false" />
+          <Property Name="ArrivalTime" Type="DateTime" Precision="6" Nullable="false" />
+          <NavigationProperty Name="Aircraft" Relationship="Self.fk_flight_aircraft" FromRole="Flight" ToRole="Aircraft" />
+          <NavigationProperty Name="StatusFlight" Relationship="Self.fk_flight_status_flight" FromRole="Flight" ToRole="StatusFlight" />
+          <NavigationProperty Name="Order" Relationship="Self.fk_order_flight" FromRole="Flight" ToRole="Order" />
+          <NavigationProperty Name="Route" Relationship="Self.fk_route_flight" FromRole="Flight" ToRole="Route" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="IDOrder" />
+          </Key>
+          <Property Name="IDOrder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDCustomer" Type="Int32" Nullable="false" />
+          <Property Name="IDFlight" Type="Int32" Nullable="false" />
+          <Property Name="IDAircraft" Type="Int32" Nullable="false" />
+          <Property Name="IDAirport" Type="Int32" Nullable="false" />
+          <Property Name="IDRoute" Type="Int32" Nullable="false" />
+          <Property Name="IDCargo" Type="Int32" Nullable="false" />
+          <Property Name="IDPayment" Type="Int32" Nullable="false" />
+          <Property Name="IDEmployee" Type="Int32" Nullable="false" />
+          <Property Name="IDStatusOrder" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Aircraft" Relationship="Self.fk_order_aircraft" FromRole="Order" ToRole="Aircraft" />
+          <NavigationProperty Name="Airport" Relationship="Self.fk_order_airport" FromRole="Order" ToRole="Airport" />
+          <NavigationProperty Name="Cargo" Relationship="Self.fk_order_cargo" FromRole="Order" ToRole="Cargo" />
+          <NavigationProperty Name="Customer" Relationship="Self.fk_order_customer" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="Employee" Relationship="Self.fk_order_employee" FromRole="Order" ToRole="Employee" />
+          <NavigationProperty Name="Flight" Relationship="Self.fk_order_flight" FromRole="Order" ToRole="Flight" />
+          <NavigationProperty Name="Payment" Relationship="Self.fk_order_payment" FromRole="Order" ToRole="Payment" />
+          <NavigationProperty Name="Route" Relationship="Self.fk_order_route" FromRole="Order" ToRole="Route" />
+          <NavigationProperty Name="StatusOrder" Relationship="Self.fk_order_status_order" FromRole="Order" ToRole="StatusOrder" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="IDPayment" />
+          </Key>
+          <Property Name="IDPayment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDPaymentMethod" Type="Int32" Nullable="false" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="0" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.fk_order_payment" FromRole="Payment" ToRole="Order" />
+          <NavigationProperty Name="PaymentMethod" Relationship="Self.fk_payment_payment_method" FromRole="Payment" ToRole="PaymentMethod" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="IDPaymentMethod" />
+          </Key>
+          <Property Name="IDPaymentMethod" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentMethod1" Type="String" MaxLength="18" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Payment" Relationship="Self.fk_payment_payment_method" FromRole="PaymentMethod" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="RoleEmployee">
+          <Key>
+            <PropertyRef Name="IDRoleEmployee" />
+          </Key>
+          <Property Name="IDRoleEmployee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleEmployee1" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.fk_employee_role_employee" FromRole="RoleEmployee" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="IDRoute" />
+          </Key>
+          <Property Name="IDRoute" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDFlight" Type="Int32" Nullable="false" />
+          <Property Name="IDAircraft" Type="Int32" Nullable="false" />
+          <Property Name="IDArrivalAirport" Type="Int32" Nullable="false" />
+          <Property Name="IDDepartureAirport" Type="Int32" Nullable="false" />
+          <Property Name="Distance" Type="Double" />
+          <NavigationProperty Name="Aircraft" Relationship="Self.fk_route_aircraft" FromRole="Route" ToRole="Aircraft" />
+          <NavigationProperty Name="Airport" Relationship="Self.fk_route_arrival_airport" FromRole="Route" ToRole="Airport" />
+          <NavigationProperty Name="Airport1" Relationship="Self.fk_route_departure_airport" FromRole="Route" ToRole="Airport" />
+          <NavigationProperty Name="Cargo" Relationship="Self.fk_cargo_route" FromRole="Route" ToRole="Cargo" />
+          <NavigationProperty Name="Flight" Relationship="Self.fk_route_flight" FromRole="Route" ToRole="Flight" />
+          <NavigationProperty Name="Order" Relationship="Self.fk_order_route" FromRole="Route" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="StatusAircraft">
+          <Key>
+            <PropertyRef Name="IDStatusAircraft" />
+          </Key>
+          <Property Name="IDStatusAircraft" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusAircraft1" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Aircraft" Relationship="Self.fk_aircraft_status_aircraft" FromRole="StatusAircraft" ToRole="Aircraft" />
+        </EntityType>
+        <EntityType Name="StatusAirport">
+          <Key>
+            <PropertyRef Name="IDStatusAirport" />
+          </Key>
+          <Property Name="IDStatusAirport" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusAirport1" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Airport" Relationship="Self.fk_airport_status_airport" FromRole="StatusAirport" ToRole="Airport" />
+        </EntityType>
+        <EntityType Name="StatusFlight">
+          <Key>
+            <PropertyRef Name="IDStatusFlight" />
+          </Key>
+          <Property Name="IDStatusFlight" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusFlight1" Type="String" MaxLength="17" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Flight" Relationship="Self.fk_flight_status_flight" FromRole="StatusFlight" ToRole="Flight" />
+        </EntityType>
+        <EntityType Name="StatusOrder">
+          <Key>
+            <PropertyRef Name="IDStatusOrder" />
+          </Key>
+          <Property Name="IDStatusOrder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusOrder1" Type="String" MaxLength="17" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.fk_order_status_order" FromRole="StatusOrder" ToRole="Order" />
+        </EntityType>
+        <Association Name="fk_aircraft_status_aircraft">
+          <End Role="StatusAircraft" Type="Self.StatusAircraft" Multiplicity="1" />
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusAircraft">
+              <PropertyRef Name="IDStatusAircraft" />
+            </Principal>
+            <Dependent Role="Aircraft">
+              <PropertyRef Name="IDStatusAircraft" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_flight_aircraft">
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aircraft">
+              <PropertyRef Name="IDAircraft" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="IDAircraft" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_aircraft">
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aircraft">
+              <PropertyRef Name="IDAircraft" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDAircraft" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_route_aircraft">
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aircraft">
+              <PropertyRef Name="IDAircraft" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="IDAircraft" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_airport_status_airport">
+          <End Role="StatusAirport" Type="Self.StatusAirport" Multiplicity="1" />
+          <End Role="Airport" Type="Self.Airport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusAirport">
+              <PropertyRef Name="IDStatusAirport" />
+            </Principal>
+            <Dependent Role="Airport">
+              <PropertyRef Name="IDStatusAirport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_airport">
+          <End Role="Airport" Type="Self.Airport" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="IDAirport" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDAirport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_route_arrival_airport">
+          <End Role="Airport" Type="Self.Airport" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="IDAirport" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="IDArrivalAirport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_route_departure_airport">
+          <End Role="Airport" Type="Self.Airport" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="IDAirport" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="IDDepartureAirport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cargo_cargo_status">
+          <End Role="CargoStatus" Type="Self.CargoStatus" Multiplicity="1" />
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CargoStatus">
+              <PropertyRef Name="IDCargoStatus" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="IDCargoStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cargo_customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="IDCustomer" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="IDCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cargo_route">
+          <End Role="Route" Type="Self.Route" Multiplicity="1" />
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="IDRoute" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="IDRoute" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_cargo">
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargo">
+              <PropertyRef Name="IDCargo" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDCargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="IDCustomer" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_employee_role_employee">
+          <End Role="RoleEmployee" Type="Self.RoleEmployee" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleEmployee">
+              <PropertyRef Name="IDRoleEmployee" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="IDRoleEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="IDEmployee" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_flight_status_flight">
+          <End Role="StatusFlight" Type="Self.StatusFlight" Multiplicity="1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusFlight">
+              <PropertyRef Name="IDStatusFlight" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="IDStatusFlight" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_flight">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="IDFlight" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDFlight" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_route_flight">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="IDFlight" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="IDFlight" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_payment">
+          <End Role="Payment" Type="Self.Payment" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="IDPayment" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDPayment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_route">
+          <End Role="Route" Type="Self.Route" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="IDRoute" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDRoute" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_status_order">
+          <End Role="StatusOrder" Type="Self.StatusOrder" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusOrder">
+              <PropertyRef Name="IDStatusOrder" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDStatusOrder" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_payment_payment_method">
+          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentMethod">
+              <PropertyRef Name="IDPaymentMethod" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="IDPaymentMethod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BazaDan" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Aircraft" EntityType="Self.Aircraft" />
+          <EntitySet Name="Airport" EntityType="Self.Airport" />
+          <EntitySet Name="Cargo" EntityType="Self.Cargo" />
+          <EntitySet Name="CargoStatus" EntityType="Self.CargoStatus" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Flight" EntityType="Self.Flight" />
+          <EntitySet Name="Order" EntityType="Self.Order" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" />
+          <EntitySet Name="PaymentMethod" EntityType="Self.PaymentMethod" />
+          <EntitySet Name="RoleEmployee" EntityType="Self.RoleEmployee" />
+          <EntitySet Name="Route" EntityType="Self.Route" />
+          <EntitySet Name="StatusAircraft" EntityType="Self.StatusAircraft" />
+          <EntitySet Name="StatusAirport" EntityType="Self.StatusAirport" />
+          <EntitySet Name="StatusFlight" EntityType="Self.StatusFlight" />
+          <EntitySet Name="StatusOrder" EntityType="Self.StatusOrder" />
+          <AssociationSet Name="fk_aircraft_status_aircraft" Association="Self.fk_aircraft_status_aircraft">
+            <End Role="StatusAircraft" EntitySet="StatusAircraft" />
+            <End Role="Aircraft" EntitySet="Aircraft" />
+          </AssociationSet>
+          <AssociationSet Name="fk_flight_aircraft" Association="Self.fk_flight_aircraft">
+            <End Role="Aircraft" EntitySet="Aircraft" />
+            <End Role="Flight" EntitySet="Flight" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_aircraft" Association="Self.fk_order_aircraft">
+            <End Role="Aircraft" EntitySet="Aircraft" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_route_aircraft" Association="Self.fk_route_aircraft">
+            <End Role="Aircraft" EntitySet="Aircraft" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="fk_airport_status_airport" Association="Self.fk_airport_status_airport">
+            <End Role="StatusAirport" EntitySet="StatusAirport" />
+            <End Role="Airport" EntitySet="Airport" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_airport" Association="Self.fk_order_airport">
+            <End Role="Airport" EntitySet="Airport" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_route_arrival_airport" Association="Self.fk_route_arrival_airport">
+            <End Role="Airport" EntitySet="Airport" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="fk_route_departure_airport" Association="Self.fk_route_departure_airport">
+            <End Role="Airport" EntitySet="Airport" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cargo_cargo_status" Association="Self.fk_cargo_cargo_status">
+            <End Role="CargoStatus" EntitySet="CargoStatus" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cargo_customer" Association="Self.fk_cargo_customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cargo_route" Association="Self.fk_cargo_route">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_cargo" Association="Self.fk_order_cargo">
+            <End Role="Cargo" EntitySet="Cargo" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_customer" Association="Self.fk_order_customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_employee_role_employee" Association="Self.fk_employee_role_employee">
+            <End Role="RoleEmployee" EntitySet="RoleEmployee" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_employee" Association="Self.fk_order_employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_flight_status_flight" Association="Self.fk_flight_status_flight">
+            <End Role="StatusFlight" EntitySet="StatusFlight" />
+            <End Role="Flight" EntitySet="Flight" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_flight" Association="Self.fk_order_flight">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_route_flight" Association="Self.fk_route_flight">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_payment" Association="Self.fk_order_payment">
+            <End Role="Payment" EntitySet="Payment" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_route" Association="Self.fk_order_route">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_status_order" Association="Self.fk_order_status_order">
+            <End Role="StatusOrder" EntitySet="StatusOrder" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_payment_payment_method" Association="Self.fk_payment_payment_method">
+            <End Role="PaymentMethod" EntitySet="PaymentMethod" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище CargoExpressModelContainer" CdmEntityContainer="BazaDan">
+          <EntitySetMapping Name="Aircraft">
+            <EntityTypeMapping TypeName="CargoExpressModel.Aircraft">
+              <MappingFragment StoreEntitySet="Aircraft">
+                <ScalarProperty Name="IDAircraft" ColumnName="IDAircraft" />
+                <ScalarProperty Name="IDStatusAircraft" ColumnName="IDStatusAircraft" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Airport">
+            <EntityTypeMapping TypeName="CargoExpressModel.Airport">
+              <MappingFragment StoreEntitySet="Airport">
+                <ScalarProperty Name="IDAirport" ColumnName="IDAirport" />
+                <ScalarProperty Name="IDStatusAirport" ColumnName="IDStatusAirport" />
+                <ScalarProperty Name="AirportName" ColumnName="AirportName" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cargo">
+            <EntityTypeMapping TypeName="CargoExpressModel.Cargo">
+              <MappingFragment StoreEntitySet="Cargo">
+                <ScalarProperty Name="IDCargo" ColumnName="IDCargo" />
+                <ScalarProperty Name="IDRoute" ColumnName="IDRoute" />
+                <ScalarProperty Name="IDCargoStatus" ColumnName="IDCargoStatus" />
+                <ScalarProperty Name="IDCustomer" ColumnName="IDCustomer" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CargoStatus">
+            <EntityTypeMapping TypeName="CargoExpressModel.CargoStatus">
+              <MappingFragment StoreEntitySet="CargoStatus">
+                <ScalarProperty Name="IDCargoStatus" ColumnName="IDCargoStatus" />
+                <ScalarProperty Name="CargoStatus1" ColumnName="CargoStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customer">
+            <EntityTypeMapping TypeName="CargoExpressModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="IDCustomer" ColumnName="IDCustomer" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="CargoExpressModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="IDEmployee" ColumnName="IDEmployee" />
+                <ScalarProperty Name="IDRoleEmployee" ColumnName="IDRoleEmployee" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Flight">
+            <EntityTypeMapping TypeName="CargoExpressModel.Flight">
+              <MappingFragment StoreEntitySet="Flight">
+                <ScalarProperty Name="IDFlight" ColumnName="IDFlight" />
+                <ScalarProperty Name="IDAircraft" ColumnName="IDAircraft" />
+                <ScalarProperty Name="IDStatusFlight" ColumnName="IDStatusFlight" />
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+                <ScalarProperty Name="ArrivalTime" ColumnName="ArrivalTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="CargoExpressModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="IDOrder" ColumnName="IDOrder" />
+                <ScalarProperty Name="IDCustomer" ColumnName="IDCustomer" />
+                <ScalarProperty Name="IDFlight" ColumnName="IDFlight" />
+                <ScalarProperty Name="IDAircraft" ColumnName="IDAircraft" />
+                <ScalarProperty Name="IDAirport" ColumnName="IDAirport" />
+                <ScalarProperty Name="IDRoute" ColumnName="IDRoute" />
+                <ScalarProperty Name="IDCargo" ColumnName="IDCargo" />
+                <ScalarProperty Name="IDPayment" ColumnName="IDPayment" />
+                <ScalarProperty Name="IDEmployee" ColumnName="IDEmployee" />
+                <ScalarProperty Name="IDStatusOrder" ColumnName="IDStatusOrder" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payment">
+            <EntityTypeMapping TypeName="CargoExpressModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="IDPayment" ColumnName="IDPayment" />
+                <ScalarProperty Name="IDPaymentMethod" ColumnName="IDPaymentMethod" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentMethod">
+            <EntityTypeMapping TypeName="CargoExpressModel.PaymentMethod">
+              <MappingFragment StoreEntitySet="PaymentMethod">
+                <ScalarProperty Name="IDPaymentMethod" ColumnName="IDPaymentMethod" />
+                <ScalarProperty Name="PaymentMethod1" ColumnName="PaymentMethod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleEmployee">
+            <EntityTypeMapping TypeName="CargoExpressModel.RoleEmployee">
+              <MappingFragment StoreEntitySet="RoleEmployee">
+                <ScalarProperty Name="IDRoleEmployee" ColumnName="IDRoleEmployee" />
+                <ScalarProperty Name="RoleEmployee1" ColumnName="RoleEmployee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Route">
+            <EntityTypeMapping TypeName="CargoExpressModel.Route">
+              <MappingFragment StoreEntitySet="Route">
+                <ScalarProperty Name="IDRoute" ColumnName="IDRoute" />
+                <ScalarProperty Name="IDFlight" ColumnName="IDFlight" />
+                <ScalarProperty Name="IDAircraft" ColumnName="IDAircraft" />
+                <ScalarProperty Name="IDArrivalAirport" ColumnName="IDArrivalAirport" />
+                <ScalarProperty Name="IDDepartureAirport" ColumnName="IDDepartureAirport" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusAircraft">
+            <EntityTypeMapping TypeName="CargoExpressModel.StatusAircraft">
+              <MappingFragment StoreEntitySet="StatusAircraft">
+                <ScalarProperty Name="IDStatusAircraft" ColumnName="IDStatusAircraft" />
+                <ScalarProperty Name="StatusAircraft1" ColumnName="StatusAircraft" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusAirport">
+            <EntityTypeMapping TypeName="CargoExpressModel.StatusAirport">
+              <MappingFragment StoreEntitySet="StatusAirport">
+                <ScalarProperty Name="IDStatusAirport" ColumnName="IDStatusAirport" />
+                <ScalarProperty Name="StatusAirport1" ColumnName="StatusAirport" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusFlight">
+            <EntityTypeMapping TypeName="CargoExpressModel.StatusFlight">
+              <MappingFragment StoreEntitySet="StatusFlight">
+                <ScalarProperty Name="IDStatusFlight" ColumnName="IDStatusFlight" />
+                <ScalarProperty Name="StatusFlight1" ColumnName="StatusFlight" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusOrder">
+            <EntityTypeMapping TypeName="CargoExpressModel.StatusOrder">
+              <MappingFragment StoreEntitySet="StatusOrder">
+                <ScalarProperty Name="IDStatusOrder" ColumnName="IDStatusOrder" />
+                <ScalarProperty Name="StatusOrder1" ColumnName="StatusOrder" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
