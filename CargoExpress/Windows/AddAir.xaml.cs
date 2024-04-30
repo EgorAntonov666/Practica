@@ -54,6 +54,17 @@ namespace CargoExpress.Windows
                 MessageBox.Show("Заполните все обязательные поля перед сохранением.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+            if (txtImya.Text.Length > 30)
+            {
+                MessageBox.Show("Поле 'Название Аэропорта' должно содержать не более 30 символов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (txtfamilia.Text.Length > 35)
+            {
+                MessageBox.Show("Поле 'Местоположение' должно содержать не более 35 символов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+          
             try
             {
                 using (var connection = new NpgsqlConnection(connectionString))
@@ -61,13 +72,13 @@ namespace CargoExpress.Windows
                     connection.Open();
 
                     string sql = @"INSERT INTO ""Airport"" (""AirportName"", ""Location"", ""IDStatusAirport"")
-    VALUES (@FirstName, @Surname, @IDStatusAirport)";
+    VALUES (@AirportName, @Location, @IDStatusAirport)";
 
 
                     using (var command = new NpgsqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@FirstName", txtImya.Text);
-                        command.Parameters.AddWithValue("@Surname", txtfamilia.Text);
+                        command.Parameters.AddWithValue("@AirportName", txtImya.Text);
+                        command.Parameters.AddWithValue("@Location", txtfamilia.Text);
                         command.Parameters.AddWithValue("@IDAirport", GetNextAirId());
                         command.Parameters.AddWithValue("@IDStatusAirport", 1);
 

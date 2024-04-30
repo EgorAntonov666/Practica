@@ -57,8 +57,8 @@ namespace CargoExpress.Windows
                     connection.Open();
 
                     string sql = @"UPDATE ""Cargo"" 
-                          SET ""Volume"" = @NewVolume, 
-                              ""Weight"" = @NewWeight
+                          SET ""Volume"" = @Volume, 
+                              ""Weight"" = @Weight
                           WHERE ""Description"" = @Description";
 
                     using (var command = new NpgsqlCommand(sql, connection))
@@ -66,8 +66,8 @@ namespace CargoExpress.Windows
                         decimal newVolume = Convert.ToDecimal(txtfamilia.Text);
                         decimal newWeight = Convert.ToDecimal(txtoth.Text);
                         string description = txtImya.Text;
-                        command.Parameters.AddWithValue("@NewVolume", newVolume);
-                        command.Parameters.AddWithValue("@NewWeight", newWeight);
+                        command.Parameters.AddWithValue("@Volume", newVolume);
+                        command.Parameters.AddWithValue("@Weight", newWeight);
                         command.Parameters.AddWithValue("@Description", description);
 
                         command.ExecuteNonQuery();

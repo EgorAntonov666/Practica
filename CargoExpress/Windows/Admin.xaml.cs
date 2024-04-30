@@ -55,15 +55,12 @@ namespace CargoExpress.Windows
                             {
                                 var employee = new Employee
                                 {
-                              
                                     FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                                     Surname = reader.GetString(reader.GetOrdinal("Surname")),
                                     LastName = reader.GetString(reader.GetOrdinal("LastName")),
                                     PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber")),
                                     EmailAddress = reader.GetString(reader.GetOrdinal("EmailAddress")),
-                                    Login = reader.GetString(reader.GetOrdinal("Login"))
-                                    
-                                    
+                                    Login = reader.GetString(reader.GetOrdinal("Login")) 
                                 };
                                 Employees.Add(employee);
                             }

@@ -59,17 +59,49 @@ namespace CargoExpress.Windows
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtImya.Text) ||
-        string.IsNullOrWhiteSpace(txtfamilia.Text) ||
-        string.IsNullOrWhiteSpace(txtpass.Text) ||
-        string.IsNullOrWhiteSpace(txtlogin.Text) ||
-        string.IsNullOrWhiteSpace(txtNumberPhone.Text) ||
-        string.IsNullOrWhiteSpace(txtPochta.Text))
+     string.IsNullOrWhiteSpace(txtfamilia.Text) ||
+     string.IsNullOrWhiteSpace(txtpass.Text) ||
+     string.IsNullOrWhiteSpace(txtlogin.Text) ||
+     string.IsNullOrWhiteSpace(txtNumberPhone.Text) ||
+     string.IsNullOrWhiteSpace(txtPochta.Text))
             {
                 MessageBox.Show("Заполните все обязательные поля перед сохранением.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+
+            if (txtImya.Text.Length > 30)
+            {
+                MessageBox.Show("Поле 'Имя' должно содержать не более 30 символов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (txtfamilia.Text.Length > 40)
+            {
+                MessageBox.Show("Поле 'Фамилия' должно содержать не более 40 символов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (txtpass.Text.Length > 65)
+            {
+                MessageBox.Show("Поле 'Пароль' должно содержать не более 65 символов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (txtlogin.Text.Length > 8)
+            {
+                MessageBox.Show("Поле 'Логин' должно содержать не более 8 символов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (txtNumberPhone.Text.Length > 16)
+            {
+                MessageBox.Show("Поле 'Номер телефона' должно содержать не более 16 символов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (txtPochta.Text.Length > 255)
+            {
+                MessageBox.Show("Поле 'Почта' должно содержать не более 255 символов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             try
             {
+                
                 using (var connection = new NpgsqlConnection(connectionString))
                 {
                     connection.Open();
@@ -96,8 +128,9 @@ namespace CargoExpress.Windows
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Произошла ошибка при сохранении данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Произошла ошибка при сохранении данных: {ex.ToString()}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
         private int GetNextEmployeeId()

@@ -103,7 +103,7 @@ namespace CargoExpress.Windows
                     NavigationService.Navigate(new ScladWorker());
                     break;
                 case "Транспортный менеджер":
-                    NavigationService.Navigate(new TranspManager(polzov));
+                    NavigationService.Navigate(new Pilot());
                     break;
                 case "Директор":
                     NavigationService.Navigate(new Director(polzov));
@@ -115,13 +115,13 @@ namespace CargoExpress.Windows
                     NavigationService.Navigate(new Yborssik(polzov));
                     break;
                 case "Инженер":
-                    NavigationService.Navigate(new Enginer(polzov));
+                    NavigationService.Navigate(new Pilot());
                     break;
                 case "Отдел бухгалтерии":
                     NavigationService.Navigate(new ByhgalterSection(polzov));
                     break;
                 case "Сотрудник пункта выдачи":
-                    NavigationService.Navigate(new PyntktVidachi(polzov));
+                    NavigationService.Navigate(new ScladWorker());
                     break;
                 default:
                     MessageBox.Show("Неверная роль пользователя.");

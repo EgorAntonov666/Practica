@@ -54,6 +54,11 @@ namespace CargoExpress.Windows
                 MessageBox.Show("Заполните все обязательные поля перед сохранением.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+            if (txtImya.Text.Length > 30)
+            {
+                MessageBox.Show("Поле 'Модель' должно содержать не более 20 символов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             try
             {
                 using (var connection = new NpgsqlConnection(connectionString))
@@ -61,13 +66,13 @@ namespace CargoExpress.Windows
                     connection.Open();
 
                     string sql = @"INSERT INTO ""Aircraft"" (""Model"", ""Capacity"", ""IDStatusAircraft"")
-    VALUES (@FirstName, @Surname, @IDStatusAircraft)";
+    VALUES (@Model, @Capacity, @IDStatusAircraft)";
 
 
                     using (var command = new NpgsqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@FirstName", txtImya.Text);
-                        command.Parameters.AddWithValue("@Surname", int.Parse(txtfamilia.Text));
+                        command.Parameters.AddWithValue("@Model", txtImya.Text);
+                        command.Parameters.AddWithValue("@Capacity", int.Parse(txtfamilia.Text));
                         command.Parameters.AddWithValue("@IDAircraft", GetNextAirId());
                         command.Parameters.AddWithValue("@IDStatusAircraft", 1);
 

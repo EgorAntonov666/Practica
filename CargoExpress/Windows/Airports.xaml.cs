@@ -41,7 +41,7 @@ namespace CargoExpress.Windows
                 {
                     connection.Open();
 
-                    var query = "SELECT * FROM \"Airport\" JOIN \"StatusAirport\" ON \"Airport\".\"IDStatusAirport\" = \"StatusAirport\".\"IDStatusAirport\"";
+                    var query = "SELECT * FROM \"Airport\"";
 
                     using (var command = new NpgsqlCommand(query, connection))
                     {
